@@ -73,14 +73,29 @@ export const withRequestHandler = (
         if (!ctx?.accountId) {
           return {
             statusCode: 401,
+            headers: {
+              'Access-Control-Allow-Origin': '*',
+              'Access-Control-Allow-Methods': 'OPTIONS,POST,GET,PUT,DELETE',
+              'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+            },
             body: JSON.stringify({ error: 'Unauthorized: Invalid token' }),
           }
         }
       }
 
-      const validationErrorResponse = validateRequest(schema || {}, event)
-      if (validationErrorResponse) {
-        return validationErrorResponse
+      const validationError = validateRequest(schema || {}, event)
+      if (validationError) {
+        // Construct validation error response with CORS headers
+        return {
+          statusCode: validationError.statusCode,
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET,PUT,DELETE',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+            'Content-Type': 'application/json', // Also ensure content type is set
+          },
+          body: validationError.body,
+        }
       }
 
       // Execute the main handler function
@@ -88,6 +103,12 @@ export const withRequestHandler = (
       if (result === true) {
         return {
           statusCode: 201,
+          headers: {
+            'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'OPTIONS,POST,GET,PUT,DELETE',
+            'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+          },
           body: JSON.stringify({ message: 'Success' }),
         }
       }
@@ -96,6 +117,9 @@ export const withRequestHandler = (
         statusCode: 200,
         headers: {
           'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'OPTIONS,POST,GET,PUT,DELETE',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
         },
         body: JSON.stringify({
           success: true,
@@ -111,6 +135,9 @@ export const withRequestHandler = (
         statusCode,
         headers: {
           'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'OPTIONS,POST,GET,PUT,DELETE',
+          'Access-Control-Allow-Headers': 'Content-Type, Authorization',
         },
         body: JSON.stringify({
           success: false,
