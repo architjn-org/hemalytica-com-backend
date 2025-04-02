@@ -1,15 +1,14 @@
-service: ${opt:stage, 'dev'}-hemalytica-com
+service: hemalytica-com-backend
 
 frameworkVersion: '3'
 
 provider:
   name: aws
   runtime: nodejs18.x
-  stage: ${opt:stage, 'dev'}
+  stage: ${opt:stage, 'prod'}
   region: ap-south-1
   environment:
-    WAITLIST_TABLE: ${self:service}-waitlist
-    JWT_SECRET: 'a32dc85b-812f-42a6-b368-973670486179'
+    WAITLIST_TABLE: ${opt:stage, 'prod'}-${self:service}-waitlist
   iam:
     role:
       statements:
@@ -36,7 +35,15 @@ functions:
       - http:
           path: waitlist
           method: post
-          cors: true
+          cors:
+            origin: 'https://www.hemalytica.com'
+            headers:
+              - Content-Type
+              - X-Amz-Date
+              - Authorization
+              - X-Api-Key
+              - X-Amz-Security-Token
+            allowCredentials: true
 
 resources:
   Resources:

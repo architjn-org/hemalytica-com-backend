@@ -23,4 +23,4 @@ const inputSchema = {
   }),
 }
 
-export const handler = withRequestHandler(mainHandler, inputSchema)
+export const handler = withRequestHandler(mainHandler, inputSchema, false)

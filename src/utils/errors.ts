@@ -34,3 +34,9 @@ export class InternalError extends CustomError {
     super(message, 'An internal error occurred.', 500)
   }
 }
+
+export class ConflictError extends CustomError {
+  constructor(message: string) {
+    super(message, 'A conflict occurred with the current state of the resource.', 409)
+  }
+}
