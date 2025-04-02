@@ -1,0 +1,24 @@
+---
+description: 
+globs: **/*
+alwaysApply: true
+---
+# File structure rule
+- src/handlers/* has all the lambda function handlers
+- src/repository/* has the files for each service, each file here will have code for database. [dynamoDbRepo.ts](mdc:src/repository/dynamoDbRepo.ts) is parent to other files in the folder.
+- src/services/* has all the business logics for each module
+
+# Error handling rules
+- Always use custom error classes [errors.ts](mdc:src/utils/errors.ts) at the places possible
+- Custom error classes will handled in [requestHandler.ts](mdc:src/utils/requestHandler.ts)
+- Custom errors thrown should not be return in the response, it should be overriden by a clean text hiding sensitive data in [requestHandler.ts](mdc:src/utils/requestHandler.ts)
+- Prefer not to use try catch, we will try to handle error in parent call using .catch() from promise response.
+
+# Response Structure
+- in src/handlers/* , mainHandler should not return APIGatewayProxyResult structure response. 
+- in src/handlers/* , mainHandler can return with anything.
+- @requestHandler.ts should handle the returned information from mainHandler to structure for APIGatewayProxyResult
+
+# Comments
+- Only add necessary comments
+- Don't add comments related to current changes.

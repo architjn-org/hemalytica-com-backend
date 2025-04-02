@@ -1,0 +1,61 @@
+service: ${opt:stage, 'dev'}-hemalytica-com
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: ${opt:stage, 'dev'}
+  region: ap-south-1
+  environment:
+    WAITLIST_TABLE: ${self:service}-waitlist
+    JWT_SECRET: 'a32dc85b-812f-42a6-b368-973670486179'
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:Query
+            - dynamodb:Scan
+          Resource:
+            - !GetAtt WaitlistTable.Arn
+
+plugins:
+  - serverless-plugin-typescript
+  - serverless-offline
+
+package:
+  individually: true
+
+functions:
+  addToWaitlist:
+    handler: src/handlers/addToWaitlist.handler
+    events:
+      - http:
+          path: waitlist
+          method: post
+          cors: true
+
+resources:
+  Resources:
+    WaitlistTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:provider.environment.WAITLIST_TABLE}
+        BillingMode: PAY_PER_REQUEST
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+          - AttributeName: createdOn
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+          - AttributeName: createdOn
+            KeyType: RANGE
+
+custom:
+  serverless-offline:
+    httpPort: 4000

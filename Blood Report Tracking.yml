@@ -1,0 +1,702 @@
+app:
+  description: ''
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: Blood Report Tracking
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+        - .JPG
+        - .JPEG
+        - .PNG
+        - .GIF
+        - .WEBP
+        - .SVG
+      allowed_file_types:
+        - image
+      allowed_file_upload_methods:
+        - local_file
+        - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+          - local_file
+          - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: true
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+      - data:
+          isInIteration: false
+          sourceType: http-request
+          targetType: end
+        id: 1740490145869-source-1740478833689-target
+        selected: false
+        source: '1740490145869'
+        sourceHandle: source
+        target: '1740478833689'
+        targetHandle: target
+        type: custom
+        zIndex: 0
+      - data:
+          isInIteration: false
+          sourceType: start
+          targetType: http-request
+        id: 1740478645481-source-1740503543389-target
+        selected: false
+        source: '1740478645481'
+        sourceHandle: source
+        target: '1740503543389'
+        targetHandle: target
+        type: custom
+        zIndex: 0
+      - data:
+          isInIteration: false
+          sourceType: http-request
+          targetType: code
+        id: 1740503543389-source-1740504471238-target
+        selected: false
+        source: '1740503543389'
+        sourceHandle: source
+        target: '1740504471238'
+        targetHandle: target
+        type: custom
+        zIndex: 0
+      - data:
+          isInIteration: false
+          sourceType: llm
+          targetType: llm
+        id: 1740550565314-source-1740478898945-target
+        selected: false
+        source: '1740550565314'
+        sourceHandle: source
+        target: '1740478898945'
+        targetHandle: target
+        type: custom
+        zIndex: 0
+      - data:
+          isInIteration: false
+          sourceType: document-extractor
+          targetType: llm
+        id: 1740551050799-source-1740551229993-target
+        selected: false
+        source: '1740551050799'
+        sourceHandle: source
+        target: '1740551229993'
+        targetHandle: target
+        type: custom
+        zIndex: 0
+      - data:
+          isInIteration: false
+          sourceType: document-extractor
+          targetType: llm
+        id: 1740551050799-source-1740550565314-target
+        selected: false
+        source: '1740551050799'
+        sourceHandle: source
+        target: '1740550565314'
+        targetHandle: target
+        type: custom
+        zIndex: 0
+      - data:
+          isInIteration: false
+          sourceType: llm
+          targetType: llm
+        id: 1740478898945-source-17405520848020-target
+        selected: false
+        source: '1740478898945'
+        sourceHandle: source
+        target: '17405520848020'
+        targetHandle: target
+        type: custom
+        zIndex: 0
+      - data:
+          isInIteration: false
+          sourceType: llm
+          targetType: http-request
+        id: 17405520848020-source-1740490145869-target
+        selected: false
+        source: '17405520848020'
+        sourceHandle: source
+        target: '1740490145869'
+        targetHandle: target
+        type: custom
+        zIndex: 0
+      - data:
+          isInIteration: false
+          sourceType: llm
+          targetType: llm
+        id: 1740551229993-source-17405520848020-target
+        selected: false
+        source: '1740551229993'
+        sourceHandle: source
+        target: '17405520848020'
+        targetHandle: target
+        type: custom
+        zIndex: 0
+      - data:
+          isInIteration: false
+          sourceType: code
+          targetType: document-extractor
+        id: 1740504471238-source-1740551050799-target
+        source: '1740504471238'
+        sourceHandle: source
+        target: '1740551050799'
+        targetHandle: target
+        type: custom
+        zIndex: 0
+    nodes:
+      - data:
+          desc: ''
+          selected: false
+          title: Start
+          type: start
+          variables:
+            - allowed_file_extensions: []
+              allowed_file_types:
+                - document
+              allowed_file_upload_methods:
+                - local_file
+              label: Report PDF
+              max_length: 48
+              options: []
+              required: true
+              type: file
+              variable: report_file
+        height: 90
+        id: '1740478645481'
+        position:
+          x: 80
+          y: 282
+        positionAbsolute:
+          x: 80
+          y: 282
+        selected: false
+        sourcePosition: right
+        targetPosition: left
+        type: custom
+        width: 244
+      - data:
+          desc: ''
+          outputs:
+            - value_selector:
+                - '1740480116115'
+                - values
+              variable: text
+          selected: false
+          title: End
+          type: end
+        height: 90
+        id: '1740478833689'
+        position:
+          x: 2050.2417457435968
+          y: 264.71555038461014
+        positionAbsolute:
+          x: 2050.2417457435968
+          y: 264.71555038461014
+        selected: false
+        sourcePosition: right
+        targetPosition: left
+        type: custom
+        width: 244
+      - data:
+          context:
+            enabled: true
+            variable_selector:
+              - '1740504471238'
+              - result
+          desc: ''
+          model:
+            completion_params:
+              temperature: 0.7
+            mode: chat
+            name: gpt-4o-mini
+            provider: openai
+          prompt_template:
+            - id: da5c564a-fcdf-4622-bd86-a0fc4eb825d3
+              role: system
+              text: "```xml\n<instruction>\n    <context>\n        You are an expert doctor\
+                \ capable of interpreting blood reports. You will be provided with user-submitted\
+                \ blood test results that may contain variations in test parameter names.\
+                \ Your task is to standardize these names according to a predefined list\
+                \ of test parameters.\n\nPredefined List - \n{{#context#}}\n    </context>\n\
+                \n    <instructions>\n        - Review the user's blood report and identify\
+                \ the test parameters.\n        - Compare each test parameter name from\
+                \ the user's report with the predefined test parameters provided in the\
+                \ context.\n        - If a test parameter name from the user's report\
+                \ matches a predefined name (even if slightly different), replace it with\
+                \ the standardized name from the context.\n        - If the user's report\
+                \ contains a test parameter name that is not in the predefined list, retain\
+                \ the original name from the user's report.\n        - If predefined list\
+                \ is None (empty), then retain all the original names from the user's\
+                \ report\n        - Remove any terms such as \"calculated\" from the test\
+                \ parameter names.\n        - Ignore any parent headings or categories;\
+                \ only include the test parameter names directly in the output.\n    \
+                \    - Ensure that the output is formatted as a clear text without any\
+                \ XML tags or additional text.\n        - The output should only include\
+                \ entries for which there are values provided by the user.\n    </instructions>\n\
+                \n    <examples>\n        <example>\n            <context>\n         \
+                \       Glucose Fasting, Glycosylated Hemoglobin (HbA1c)\n           \
+                \ </context>\n            <input>\n                User's Blood Report:\n\
+                \                - LDL Cholesterol, Calculated: 100 mg/dL\n          \
+                \      - Fasting Glucose: 90 mg/dL\n                - HbA1c: 5.7%\n  \
+                \          </input>\n            <output>\n                LDL Cholesterol:\
+                \ 100 mg/dL\n                Glucose Fasting: 90 mg/dL\n             \
+                \   Glycosylated Hemoglobin (HbA1c): 5.7%\n            </output>\n   \
+                \     </example>\n        <example>\n            <context>\n         \
+                \       Calcium, Glucose Fasting, Glycosylated Hemoglobin (HbA1c)\n  \
+                \          </context>\n            <input>\n                User's Blood\
+                \ Report:\n                - Calcium 1: 9.5 mg/dL\n                - Total\
+                \ Cholesterol: 180 mg/dL\n            </input>\n            <output>\n\
+                \                Calcium: 9.5 mg/dL\n                Total Cholesterol:\
+                \ 180 mg/dL\n            </output>\n        </example>\n        <example>\n\
+                \            <context>\n                Calcium, Triglycerides, Glucose\
+                \ Fasting, Glycosylated Hemoglobin (HbA1c)\n            </context>\n \
+                \           <input>\n                User's Blood Report:\n          \
+                \      - Triglycerides: 150 mg/dL\n                - LDL Cholesterol:\
+                \ 120 mg/dL\n                - Nonexistent Test: 50\n            </input>\n\
+                \            <output>\n                Triglycerides: 150 mg/dL\n    \
+                \            LDL Cholesterol: 120 mg/dL\n                Nonexistent Test:\
+                \ 50\n            </output>\n        </example>\n    </examples>\n</instruction>\n\
+                ```"
+            - id: 2c4d7544-2cd2-4356-ab44-159e7e2aa139
+              role: user
+              text: 'This is the text extracted data in table format
+
+
+                Blood Report Information in Table
+
+                {{#1740550565314.text#}}'
+          selected: false
+          title: Labelling Doctor
+          type: llm
+          variables: []
+          vision:
+            enabled: false
+        height: 98
+        id: '1740478898945'
+        position:
+          x: 1066.4831363819828
+          y: 377.0202817018794
+        positionAbsolute:
+          x: 1066.4831363819828
+          y: 377.0202817018794
+        selected: true
+        sourcePosition: right
+        targetPosition: left
+        type: custom
+        width: 244
+      - data:
+          authorization:
+            config: null
+            type: no-auth
+          body:
+            data:
+              - id: key-value-792
+                key: ''
+                type: text
+                value: '{{#17405520848020.text#}}'
+            type: raw-text
+          desc: ''
+          headers: ''
+          method: post
+          params: ''
+          retry_config:
+            max_retries: 3
+            retry_enabled: false
+            retry_interval: 100
+          selected: false
+          timeout:
+            max_connect_timeout: 0
+            max_read_timeout: 0
+            max_write_timeout: 0
+          title: HTTP Request
+          type: http-request
+          url: https://inbsdkquk8.execute-api.ap-south-1.amazonaws.com/dev/save-record
+          variables: []
+        height: 126
+        id: '1740490145869'
+        position:
+          x: 1707.1981751345181
+          y: 264.71555038461014
+        positionAbsolute:
+          x: 1707.1981751345181
+          y: 264.71555038461014
+        selected: false
+        sourcePosition: right
+        targetPosition: left
+        type: custom
+        width: 244
+      - data:
+          authorization:
+            config: null
+            type: no-auth
+          body:
+            data: []
+            type: none
+          desc: ''
+          headers: ''
+          method: get
+          params: ''
+          retry_config:
+            max_retries: 3
+            retry_enabled: false
+            retry_interval: 100
+          selected: false
+          timeout:
+            max_connect_timeout: 0
+            max_read_timeout: 0
+            max_write_timeout: 0
+          title: Get Test Parameters
+          type: http-request
+          url: https://inbsdkquk8.execute-api.ap-south-1.amazonaws.com/dev/test-parameters
+          variables: []
+        height: 126
+        id: '1740503543389'
+        position:
+          x: 465.67777504348555
+          y: 179.96212871814475
+        positionAbsolute:
+          x: 465.67777504348555
+          y: 179.96212871814475
+        selected: false
+        sourcePosition: right
+        targetPosition: left
+        type: custom
+        width: 244
+      - data:
+          code: "\nconst defaultList = \"Fasting Glucose, Calcium, Uric Acid, Total\
+            \ Bilirubin, Direct Bilirubin, Indirect Bilirubin, Aspartate Transaminase\
+            \ (AST/SGOT), Alanine Transaminase (ALT/SGPT), Alkaline Phosphatase, Gamma-Glutamyl\
+            \ Transferase, Total Protein, Albumin, Globulin, A/G Ratio, SGOT/SGPT Ratio,\
+            \ Glycosylated Haemoglobin (HbA1c), Mean Blood Glucose, Urea, Creatinine,\
+            \ Blood Urea Nitrogen (BUN), Uric Acid, Calcium, Total Cholesterol, Triglycerides,\
+            \ HDL Cholesterol, Non-HDL Cholesterol, LDL Cholesterol, VLDL Cholesterol,\
+            \ Cholesterol/HDL Ratio, LDL:HDL Ratio, HDL/LDL Ratio, TSH, Vitamin D (25\
+            \ OH Cholecalciferol), RBC Count, Hemoglobin, Hematocrit, Mean Corpuscular\
+            \ Volume, Mean Corpuscular Hemoglobin, Mean Corpuscular Hemoglobin Concentration,\
+            \ Red Cell Distribution Width (RDW-CV), Mentzer Index, Sehgal Index, Total\
+            \ WBC Count, Neutrophils, Lymphocytes, Monocytes, Eosinophils, Basophils,\
+            \ Absolute Neutrophil Count, Absolute Lymphocyte Count, Absolute Monocyte\
+            \ Count, Absolute Eosinophil Count, Absolute Basophil Count, Neutrophil-Lymphocyte\
+            \ Ratio, Platelet Count, Platelet Hematocrit, Mean Platelet Volume (MPV),\
+            \ Erythrocyte Sedimentation Rate (ESR), Volume, Colour, Appearance, pH,\
+            \ Specific gravity, Protein, Glucose, Ketone bodies, Bilirubin, Blood, Urobilinogen,\
+            \ Leucocyte Esterase, Nitrites, Pus cells, Epithelial cells, RBCs, Granular\
+            \ Casts, Hyaline Casts, Uric acid Crystals, Phosphate Crystals, Calcium\
+            \ Oxalate Crystals, Amorphous urates, Amorphous phosphates, Yeast, Bacteria,\
+            \ Parasites, Mucus\"\n\nfunction main({api_data}) {\n    const resp = api_data;\n\
+            \    const json = JSON.parse(resp);\n    const list = json?.data?.body;\n\
+            \    const listInString = JSON.parse(list)?.testNames.join(',')\n    return\
+            \ {\n        result: listInString === '' ? defaultList : listInString\n\
+            \    }\n}\n"
+          code_language: javascript
+          desc: ''
+          outputs:
+            result:
+              children: null
+              type: string
+          selected: false
+          title: Code
+          type: code
+          variables:
+            - value_selector:
+                - '1740503543389'
+                - body
+              variable: api_data
+        height: 54
+        id: '1740504471238'
+        position:
+          x: 764.8647151298883
+          y: 179.96212871814475
+        positionAbsolute:
+          x: 764.8647151298883
+          y: 179.96212871814475
+        selected: false
+        sourcePosition: right
+        targetPosition: left
+        type: custom
+        width: 244
+      - data:
+          desc: ''
+          is_array_file: false
+          selected: false
+          title: Doc Extractor
+          type: document-extractor
+          variable_selector:
+            - '1740478645481'
+            - report_file
+        height: 92
+        id: '1740551050799'
+        position:
+          x: 764.8647151298883
+          y: 272.5818393076485
+        positionAbsolute:
+          x: 764.8647151298883
+          y: 272.5818393076485
+        selected: false
+        sourcePosition: right
+        targetPosition: left
+        type: custom
+        width: 244
+      - data:
+          context:
+            enabled: false
+            variable_selector: []
+          desc: ''
+          model:
+            completion_params:
+              temperature: 0.7
+            mode: chat
+            name: gpt-4o-mini
+            provider: openai
+          prompt_template:
+            - id: a26f6068-95c6-4487-bb80-38848b268908
+              role: system
+              text: "```xml\n<instruction>\n    <instructions>\n        You are tasked\
+                \ with reading a Medical Blood Test Report and extracting relevant information.\
+                \ Follow these steps to complete the task:\n        1. Read the provided\
+                \ text of the blood test report carefully.\n        2. Identify and extract\
+                \ all test parameter names along with their corresponding results.\n \
+                \       3. Ignore any general or irrelevant text that does not pertain\
+                \ to the test results.\n        4. Do not include any parent headings\
+                \ or introductory text in your output.\n        5. Ensure that you only\
+                \ include entries that have both the test parameter name and its value.\n\
+                \        6. Format your output in a clear text format, with each test\
+                \ result on a new line.\n        7. Do not include any XML tags or additional\
+                \ formatting in your output.\n    </instructions>\n    \n    <examples>\n\
+                \        <example>\n            <input>\n                Complete Blood\
+                \ Count (CBC):\n                Hemoglobin: 15.5 g/dL\n              \
+                \  Hematocrit: 45.0%\n                White Blood Cell Count: 6,000 cells/mcL\n\
+                \                Platelet Count: 250,000 cells/mcL\n                This\
+                \ is a standard test to evaluate overall health.\n            </input>\n\
+                \            <output>\n                Hemoglobin: 15.5 g/dL\n       \
+                \         Hematocrit: 45.0%\n                White Blood Cell Count: 6,000\
+                \ cells/mcL\n                Platelet Count: 250,000 cells/mcL\n     \
+                \       </output>\n        </example>\n        \n        <example>\n \
+                \           <input>\n                Lipid Panel Results:\n          \
+                \      Total Cholesterol: 190 mg/dL\n                LDL Cholesterol:\
+                \ 110 mg/dL\n                HDL Cholesterol: 50 mg/dL\n             \
+                \   Triglycerides: 150 mg/dL\n                Note: These values are important\
+                \ for assessing cardiovascular risk.\n            </input>\n         \
+                \   <output>\n                Total Cholesterol: 190 mg/dL\n         \
+                \       LDL Cholesterol: 110 mg/dL\n                HDL Cholesterol: 50\
+                \ mg/dL\n                Triglycerides: 150 mg/dL\n            </output>\n\
+                \        </example>\n        \n        <example>\n            <input>\n\
+                \                Thyroid Function Tests:\n                TSH: 2.5 µIU/mL\n\
+                \                Free T4: 1.2 ng/dL\n                Free T3: 3.0 pg/mL\n\
+                \                This test helps in evaluating thyroid function.\n   \
+                \         </input>\n            <output>\n                TSH: 2.5 µIU/mL\n\
+                \                Free T4: 1.2 ng/dL\n                Free T3: 3.0 pg/mL\n\
+                \            </output>\n        </example>\n    </examples>\n</instruction>\n\
+                ```"
+            - id: d2a2b64c-0eb4-4848-a2ea-5b1e204370bf
+              role: user
+              text: "This is my PDF file parsed \n\nContent - \n{{#1740551050799.text#}}"
+          selected: false
+          title: Report Data In Table
+          type: llm
+          variables: []
+          vision:
+            enabled: false
+        height: 98
+        id: '1740550565314'
+        position:
+          x: 1066.4831363819828
+          y: 251.2834083916352
+        positionAbsolute:
+          x: 1066.4831363819828
+          y: 251.2834083916352
+        selected: false
+        sourcePosition: right
+        targetPosition: left
+        type: custom
+        width: 244
+      - data:
+          context:
+            enabled: false
+            variable_selector: []
+          desc: ''
+          model:
+            completion_params:
+              temperature: 0.7
+            mode: chat
+            name: gpt-4o-mini
+            provider: openai
+          prompt_template:
+            - id: 459e8794-b5d8-4a69-b27d-4429eb048f32
+              role: system
+              text: "```xml\n<instruction>\n    <instructions>\n        1. Read the provided\
+                \ text carefully to extract personal information.\n        2. Identify\
+                \ the name in the text and remove any titles or annotations (e.g., Dr,\
+                \ Mr, Ms) to keep only the clean name.\n        3. Look for any dates\
+                \ in the text and ensure they are formatted in DD/MM/YYYY format. If the\
+                \ date is not in this format, do not include it in the output.\n     \
+                \   4. Extract other personal information such as age, weight, and height\
+                \ if available in the text.\n        5. Ensure that the output contains\
+                \ only the extracted values in a clear text format without any XML tags\
+                \ or additional text.\n        6. If any of the required values (name,\
+                \ age, weight, height, date) are missing, do not include them in the output.\n\
+                \        7. Format the output as follows:\n           - Name: [Clean Name]\n\
+                \           - Date: [Report Date]\n           - Age: [Age]\n         \
+                \  - Weight: [Weight]\n           - Height: [Height]\n        8. Ensure\
+                \ that the output is concise and only includes the values as specified.\n\
+                \        9. Name and Date are the most important fields. They should be\
+                \ definitely in output. \n    </instructions>\n    \n    <examples>\n\
+                \        <example>\n            <input>\n                \"Mr. John Doe,\
+                \ born on 15/04/1990, is 28 years old, weighs 75 kg and is 180 cm tall.\"\
+                \n            </input>\n            <output>\n                Name: John\
+                \ Doe\n                Date: 29/01/2025\n                Age: 28\n   \
+                \             Weight: 75\n                Height: 180\n            </output>\n\
+                \        </example>\n        <example>\n            <input>\n        \
+                \        \"Ms. Jane Smith, age 30, height 165 cm, weight 60 kg, date of\
+                \ birth 20/02/1993.\"\n            </input>\n            <output>\n  \
+                \              Name: Jane Smith\n                Date: 29/01/2025\n  \
+                \              Age: 30\n                Weight: 60\n                Height:\
+                \ 165\n            </output>\n        </example>\n        <example>\n\
+                \            <input>\n                \"Dr. Emily Johnson, 25 years old,\
+                \ born on 01/01/1998.\"\n            </input>\n            <output>\n\
+                \                Name: Emily Johnson\n                Date: 21/01/2025\n\
+                \                Age: 25\n                Weight: \n                Height:\
+                \ \n            </output>\n        </example>\n    </examples>\n</instruction>\n\
+                ```"
+            - id: 96750b4d-cc06-4033-8b82-c72112a9baa4
+              role: user
+              text: "Here is the extracted text from the PDF file - \n\n{{#1740551050799.text#}}"
+          selected: false
+          title: User Information
+          type: llm
+          variables: []
+          vision:
+            enabled: false
+        height: 98
+        id: '1740551229993'
+        position:
+          x: 1066.4831363819828
+          y: 120.16827537706877
+        positionAbsolute:
+          x: 1066.4831363819828
+          y: 120.16827537706877
+        selected: false
+        sourcePosition: right
+        targetPosition: left
+        type: custom
+        width: 244
+      - data:
+          context:
+            enabled: false
+            variable_selector: []
+          desc: ''
+          model:
+            completion_params:
+              response_format: json_object
+              temperature: 0.7
+            mode: chat
+            name: gpt-4o-mini
+            provider: openai
+          prompt_template:
+            - id: da5c564a-fcdf-4622-bd86-a0fc4eb825d3
+              role: system
+              text: "```xml\n<instruction>\n  <instructions>\n    You are an expert doctor\
+                \ who can read blood reports. Your task is to extract relevant information\
+                \ from the provided blood report and format it into a JSON object. Follow\
+                \ these steps to complete the task:\n    1. Read the provided blood report\
+                \ carefully.\n    2. Identify the patient's information, including their\
+                \ name, age, height, and the date of the report.\n    3. Extract the relevant\
+                \ values from the blood report, with all the report tests.\n    4. Structure\
+                \ the output strictly according to the specified JSON format.\n    5.\
+                \ Do not include any XML tags in your output.\n    6. Make sure to validate\
+                \ that all fields are filled correctly before finalizing the JSON object.\n\
+                \  </instructions>\n  \n  <examples>\n    <example>\n      <input>\n \
+                \       Patient Name: John Doe\n        Age: 30\n        Height: 175 cm\n\
+                \        Date: 2023-10-01\n        Calcium: 9.5 mg/dL\n      </input>\n\
+                \      <output>\n        {\n          \"user_info\": {\n            \"\
+                patient_name\": \"John Doe\",\n            \"age\": \"30\",\n        \
+                \    \"height\": \"175 cm\",\n            \"date\": \"2023-10-01\"\n \
+                \         },\n          \"report\": {\n            \"Calcium\": {\n  \
+                \            \"unit\": \"mg/dL\",\n              \"value\": \"9.5\"\n\
+                \            }\n          }\n        }\n      </output>\n    </example>\n\
+                \    \n    <example>\n      <input>\n        Patient Name: Jane Smith\n\
+                \        Age: 45\n        Height: 160 cm\n        Date: 2023-09-15\n \
+                \       Calcium: 10.2 mmol/L\n        Triglycerides: 150 mg/dL\n     \
+                \    LDL Cholesterol: 120 mg/dL\n      </input>\n      <output>\n    \
+                \    {\n          \"user_info\": {\n            \"patient_name\": \"Jane\
+                \ Smith\",\n            \"age\": \"45\",\n            \"height\": \"160\
+                \ cm\",\n            \"date\": \"2023-09-15\"\n          },\n        \
+                \  \"report\": {\n            \"Calcium\": {\n              \"unit\":\
+                \ \"mmol/L\",\n              \"value\": \"10.2\"\n            },\n   \
+                \         \"Triglycerides\": {\n              \"unit\": \"mg/dL\",\n \
+                \             \"value\": \"150\"\n            },\n            \"LDL Cholesterol\"\
+                : {\n              \"unit\": \"mg/dL\",\n              \"value\": \"120\"\
+                \n            }\n          }\n        }\n      </output>\n    </example>\n\
+                \    \n    <example>\n      <input>\n        Patient Name: Alice Johnson\n\
+                \        Age: 28\n        Height: 170 cm\n        Date: 2023-08-20\n \
+                \       Calcium: 8.7 mg/dL\n        Glucose Fasting: 90 mg/dL\n      \
+                \  Glycosylated Hemoglobin (HbA1c): 5.7%\n      </input>\n      <output>\n\
+                \        {\n          \"user_info\": {\n            \"patient_name\":\
+                \ \"Alice Johnson\",\n            \"age\": \"28\",\n            \"height\"\
+                : \"170 cm\",\n            \"date\": \"2023-08-20\"\n          },\n  \
+                \        \"report\": {\n            \"Calcium\": {\n              \"unit\"\
+                : \"mg/dL\",\n              \"value\": \"8.7\"\n            },\n     \
+                \       \"Glucose Fasting\": {\n              \"unit\": \"mg/dL\",\n \
+                \             \"value\": \"90\"\n            },\n            \"Glycosylated\
+                \ Hemoglobin (HbA1c)\": {\n              \"unit\": \"%\",\n          \
+                \    \"value\": \"5.7\"\n            }\n          }\n        }\n     \
+                \ </output>\n    </example>\n  </examples>\n</instruction>\n```"
+            - id: 2c4d7544-2cd2-4356-ab44-159e7e2aa139
+              role: user
+              text: "This is the text extracted. \n\nUser Information\n{{#1740551229993.text#}}\n\
+                \nBlood Report Information in Table\n{{#1740478898945.text#}}\n\n\ncreate\
+                \ a JSON structure with above information"
+          selected: false
+          title: JSON Expert
+          type: llm
+          variables: []
+          vision:
+            enabled: false
+        height: 98
+        id: '17405520848020'
+        position:
+          x: 1395.3554274783257
+          y: 264.71555038461014
+        positionAbsolute:
+          x: 1395.3554274783257
+          y: 264.71555038461014
+        selected: false
+        sourcePosition: right
+        targetPosition: left
+        type: custom
+        width: 244
+    viewport:
+      x: -938.114661794666
+      y: 219.78649902849838
+      zoom: 0.6189986286882543
